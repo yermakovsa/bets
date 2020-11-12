@@ -2,38 +2,35 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Net;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 
-namespace bet.Functions
+namespace bets.Util
 {
-    class MatchInfo
-    {
-        public string matchId;
-        public string matchName;
-        public long timestamp;
-
-        public MatchInfo(string id, string name, long tstamp)
-        {
-            matchId = id;
-            matchName = name;
-            timestamp = tstamp;
-        }
-
-        public string MatchId { get => matchId; set => matchId = value; }
-        public string MatchName { get => matchName; set => matchName = value; }
-        public long Timestamp { get => timestamp; set => timestamp = value; }
-    }
-
-    class Sportpesa
+    class SportpesaUtil
     {
         public static string pathToFile = AppDomain.CurrentDomain.BaseDirectory + '\\';
         public static List<Match> listOfMatches;
         public static string period;
+
+        public class MatchInfo
+        {
+            public string matchId;
+            public string matchName;
+            public long timestamp;
+
+            public MatchInfo(string id, string name, long tstamp)
+            {
+                matchId = id;
+                matchName = name;
+                timestamp = tstamp;
+            }
+
+            public string MatchId { get => matchId; set => matchId = value; }
+            public string MatchName { get => matchName; set => matchName = value; }
+            public long Timestamp { get => timestamp; set => timestamp = value; }
+        }
         public static List<Match> Parse(string res, List<MatchInfo> matchesInfo)
         {
             List<Match> listOfMatches = new List<Match>();
@@ -42,12 +39,12 @@ namespace bet.Functions
             foreach (MatchInfo info in matchesInfo)
             {
                 JToken mtch = json[info.MatchId];
-                if(mtch != null)
+                if (mtch != null)
                 {
                     List<Bet> listOfBets = new List<Bet>();
                     Match match = new Match("1", listOfBets);
                     match.MatchName = info.MatchName;
-                    
+
                     DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
                     dtDateTime = dtDateTime.AddMilliseconds(info.Timestamp).ToLocalTime();
                     match.DateTime = dtDateTime;
@@ -62,12 +59,12 @@ namespace bet.Functions
                             if (marketNameToken.ToString() == "3 Way")
                             {
                                 JToken sel = market["selections"];
-                                if(sel != null)
+                                if (sel != null)
                                 {
                                     JToken first = sel[0];
                                     JToken draw = sel[1];
                                     JToken second = sel[2];
-                                    if(first != null && draw != null && second != null)
+                                    if (first != null && draw != null && second != null)
                                     {
                                         match.ListOfBets.Add(new Bet("1", double.Parse(first["odds"].ToString())));
                                         match.ListOfBets.Add(new Bet("X", double.Parse(draw["odds"].ToString())));
@@ -80,7 +77,7 @@ namespace bet.Functions
                                 JToken sel = market["selections"];
                                 if (sel != null)
                                 {
-                                    foreach(var total in sel)
+                                    foreach (var total in sel)
                                     {
                                         if (total["name"].ToString().Contains("OVER"))
                                         {
@@ -102,7 +99,7 @@ namespace bet.Functions
                                 {
                                     foreach (var handicap in sel)
                                     {
-                                        if(handicap["shortName"].ToString() == "1")
+                                        if (handicap["shortName"].ToString() == "1")
                                         {
                                             double val = double.Parse(handicap["specValue"].ToString());
                                             val -= 0.5;
@@ -141,21 +138,6 @@ namespace bet.Functions
             return listOfMatches;
         }
 
-        public static string Request(string url)
-        {
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
-            httpWebRequest.Method = "GET";
-            httpWebRequest.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36";
-            //   httpWebRequest.Accept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9";
-            // httpWebRequest.Headers.Add("accept-encoding", "gzip, deflate, br");
-            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-            {
-                var responseText = streamReader.ReadToEnd();
-                return responseText;
-            }
-        }
-
         public static List<MatchInfo> ParseIds(string res)
         {
             List<MatchInfo> result = new List<MatchInfo>();
@@ -163,24 +145,24 @@ namespace bet.Functions
             res += "}";
             JObject json = JObject.Parse(res);
             JToken mainToken = json["value"];
-            if(mainToken != null)
+            if (mainToken != null)
             {
-                foreach(var match in mainToken)
+                foreach (var match in mainToken)
                 {
                     JToken idToken = match["id"];
                     JToken compToken = match["competitors"];
                     JToken timeToken = match["dateTimestamp"];
-                    if(compToken != null && timeToken != null)
+                    if (compToken != null && timeToken != null)
                     {
                         JToken fToken = compToken[0];
                         JToken sToken = compToken[1];
                         if (fToken != null && sToken != null)
                         {
-                            JToken fnameToken = fToken["name"]; 
-                            JToken snameToken = sToken["name"]; 
+                            JToken fnameToken = fToken["name"];
+                            JToken snameToken = sToken["name"];
                             if (idToken != null && fnameToken != null && snameToken != null)
                             {
-                                result.Add(new MatchInfo(idToken.ToString(), fnameToken.ToString() + " v " + snameToken.ToString(), 
+                                result.Add(new MatchInfo(idToken.ToString(), fnameToken.ToString() + " v " + snameToken.ToString(),
                                     long.Parse(timeToken.ToString())));
                             }
                         }
@@ -190,12 +172,12 @@ namespace bet.Functions
             return result;
         }
 
-        public static string MakeReq(List<MatchInfo> matchesId)
+        public static string createRequestMatchesUrl(List<MatchInfo> matchesId)
         {
             string result = "https://www.sportpesa.com/api/games/markets?games=";
-            if(matchesId.Count > 0)
+            if (matchesId.Count > 0)
             {
-                foreach(MatchInfo info in matchesId)
+                foreach (MatchInfo info in matchesId)
                 {
                     result += info.MatchId;
                     result += ',';
@@ -209,31 +191,5 @@ namespace bet.Functions
             result += "&markets=all";
             return result;
         }
-
-        public static void StartLocal()
-        {
-            List<MatchInfo> matchesInfo = ParseIds(Request("https://www.sportpesa.com/api/upcoming/games?type=prematch&sportId=1&o=startTime&pag_count=10"));
-            string req = MakeReq(matchesInfo);
-            List<Match> LocalLitOfMatches = Parse(Request(req), matchesInfo);
-            //Console.WriteLine("list of matches count: " + LocalLitOfMatches.Count());
-            foreach (Match tmp in LocalLitOfMatches)
-            {
-                listOfMatches.Add(tmp);
-            }
-            //Console.WriteLine("1xbet end local: " + DateTime.Now.ToLongTimeString());
-            //Console.WriteLine("LIST: " + listOfMatches.Count());
-        }
-        public static void Start()
-        {
-            listOfMatches = new List<Match>();
-            StartLocal(); 
-            //Console.WriteLine("1xbet end: " + DateTime.Now.ToLongTimeString());
-        }
-        public static Bookmaker GetSportpesa()
-        {
-            Bookmaker bookmaker = new Bookmaker("sportpesa", listOfMatches);
-            return bookmaker;
-        }
     }
-    
 }

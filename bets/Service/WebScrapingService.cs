@@ -9,6 +9,7 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using static bets.Util.SportpesaUtil;
 
 namespace bets.Service
 {
@@ -35,6 +36,19 @@ namespace bets.Service
                 // TODO after testing remove break
                 break;
             }
+            return bookmaker;
+        }
+
+        public Bookmaker scrapeSportpesa()
+        {
+            List<Match> listOfMatches = new List<Match>();
+            // TODO add constant
+            Bookmaker bookmaker = new Bookmaker("sportpesa", listOfMatches);
+            String responseWithIds = sendRequest("https://www.sportpesa.com/api/upcoming/games?type=prematch&sportId=1&o=startTime&pag_count=10");
+            List<MatchInfo> matchesInfo = SportpesaUtil.ParseIds(responseWithIds);
+            String matchRequestUrl = SportpesaUtil.createRequestMatchesUrl(matchesInfo);
+            String responseWithMatches = sendRequest(matchRequestUrl);
+            listOfMatches.AddRange(SportpesaUtil.Parse(responseWithMatches, matchesInfo));
             return bookmaker;
         }
 

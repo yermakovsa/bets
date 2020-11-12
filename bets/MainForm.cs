@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using bets.Data;
-using bet.Functions;
+using bets.Service;
 
 namespace bets
 {
@@ -21,13 +21,9 @@ namespace bets
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //Task task1 = Task.Run(Helabet.Start);
-            Task task2 = Task.Run(Sportpesa.Start);
-            //task1.Wait();
-            task2.Wait();
+            WebScrapingService webScrapingService = new WebScrapingService();
             List<Bookmaker> bookmakers = new List<Bookmaker>();
-            //bookmakers.Add(Helabet.GetHelabet());
-            bookmakers.Add(Sportpesa.GetSportpesa());
+            bookmakers.Add(webScrapingService.scrapeSportpesa());
             foreach (Bookmaker bookmaker in bookmakers)
             {
                 listBox1.Items.Add(bookmaker.Name);
@@ -43,6 +39,11 @@ namespace bets
                 }
             }
             
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
