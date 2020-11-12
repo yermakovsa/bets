@@ -51,8 +51,9 @@
   <ItemGroup>
     <Compile Include="Data\Bet.cs" />
     <Compile Include="Data\Bookmaker.cs" />
-    <Compile Include="Data\Holabet.cs" />
+    <Compile Include="Data\Helabet.cs" />
     <Compile Include="Data\Match.cs" />
+    <Compile Include="Data\Sportpesa.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

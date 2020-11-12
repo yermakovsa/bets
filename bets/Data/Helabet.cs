@@ -47,7 +47,7 @@ namespace bet.Functions
                 string sportName = mch["SN"].ToString();
                 if (sportName.ToLower().Contains("table")) sportName = "Table-Tennis";
                 champName = champName.Replace(":", "");
-                string tmpUrl = "ua-1x-bet.com/en/line/" + sportName + "/" + champID + "-" + champName + "/";
+                string tmpUrl = "helabet.co.ke/line/" + sportName + "/" + champID + "-" + champName + "/";
                 tmpUrl += matchID + "-" + matchName + "/";
                 string url = "";
                 foreach(char x in tmpUrl)

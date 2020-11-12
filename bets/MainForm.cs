@@ -21,10 +21,13 @@ namespace bets
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Task task3 = Task.Run(Helabet.Start);
-            task3.Wait();
+            //Task task1 = Task.Run(Helabet.Start);
+            Task task2 = Task.Run(Sportpesa.Start);
+            //task1.Wait();
+            task2.Wait();
             List<Bookmaker> bookmakers = new List<Bookmaker>();
-            bookmakers.Add(Helabet.GetHelabet());
+            //bookmakers.Add(Helabet.GetHelabet());
+            bookmakers.Add(Sportpesa.GetSportpesa());
             foreach (Bookmaker bookmaker in bookmakers)
             {
                 listBox1.Items.Add(bookmaker.Name);
@@ -32,13 +35,14 @@ namespace bets
                 foreach (Match match in bookmaker.ListOfMatches)
                 {
                     match.MatchName = match.MatchName.Replace("Gaming", "").Replace("Academy", "").Replace("Esports", "").Replace("eSports", "");
-                    listBox1.Items.Add(match.MatchName + " " + match.DateTime.ToString());
+                    listBox1.Items.Add(match.MatchName + " " + match.DateTime.ToString() + " " + match.Url.ToString());
                     foreach (Bet bet in match.ListOfBets)
                     {
                         listBox1.Items.Add(bet.Name + " " + bet.Coef);
                     }
                 }
             }
+            
         }
     }
 }
