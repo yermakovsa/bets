@@ -9,6 +9,7 @@ namespace bets.Data
     class Match
     {
         private string matchName;
+        private string matchId;
         private string url;
         private DateTime dateTime;
         private List<Bet> listOfBets;
@@ -21,6 +22,7 @@ namespace bets.Data
         }
 
         public string MatchName { get => matchName; set => matchName = value; }
+        public string MatchId { get => matchId; set => matchId = value; }
         public string Url { get => url; set => url = value; }
         public DateTime DateTime { get => dateTime; set => dateTime = value; }
         internal List<Bet> ListOfBets { get => listOfBets; set => listOfBets = value; }

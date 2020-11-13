@@ -10,7 +10,7 @@ namespace bets.Util
 {
     class HelabetUtil
     {
-        public static List<Match> parseMatches(string s, int period)
+        public static List<Match> parseMatches(string s, string period)
         {
             List<Match> listOfMatches = new List<Match>();
             JObject json = JObject.Parse(s);
@@ -40,7 +40,7 @@ namespace bets.Util
                 if (sportName.ToLower().Contains("table")) sportName = "Table-Tennis";
                 champName = champName.Replace(":", "");
                 // TODO change url
-                string tmpUrl = "ua-1x-bet.com/en/line/" + sportName + "/" + champID + "-" + champName + "/";
+                string tmpUrl = "helabet.co.ke/line/" + sportName + "/" + champID + "-" + champName + "/";
                 tmpUrl += matchID + "-" + matchName + "/";
                 string url = "";
                 foreach (char x in tmpUrl)

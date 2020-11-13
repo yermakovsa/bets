@@ -9,13 +9,12 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using static bets.Util.SportpesaUtil;
 
 namespace bets.Service
 {
     class WebScrapingService
     {
-        public Bookmaker scrapHelabet()
+        public Bookmaker scrapeHelabet()
         {
             List<Match> listOfMatches = new List<Match>();
             // TODO add constant
@@ -27,8 +26,8 @@ namespace bets.Service
             {
                 // TODO remove it after testing
                 if (sportId != "1") continue;
-                String responseWithMatches = sendRequest(String.Format("https://helabet.co.ke/LineFeed/Get1x2_VZip?sports={0}&count=50&lng=en&tf=3000000&tz=2&mode=4&partner=237&getEmpty=true", sportId));
-                List<Match> matches = HelabetUtil.parseMatches(responseWithMatches, 0);
+                String responseWithMatches = sendRequest(String.Format("https://helabet.co.ke/LineFeed/Get1x2_VZip?sports={0}&count=10&lng=en&tf=3000000&tz=2&mode=7&partner=237&getEmpty=true", sportId));
+                List<Match> matches = HelabetUtil.parseMatches(responseWithMatches, "");
                 listOfMatches.AddRange(matches);
 
                 // TODO do something with thread.sleep
@@ -45,7 +44,7 @@ namespace bets.Service
             // TODO add constant
             Bookmaker bookmaker = new Bookmaker("sportpesa", listOfMatches);
             String responseWithIds = sendRequest("https://www.sportpesa.com/api/upcoming/games?type=prematch&sportId=1&o=startTime&pag_count=10");
-            List<MatchInfo> matchesInfo = SportpesaUtil.ParseIds(responseWithIds);
+            List<Match> matchesInfo = SportpesaUtil.ParseIds(responseWithIds);
             String matchRequestUrl = SportpesaUtil.createRequestMatchesUrl(matchesInfo);
             String responseWithMatches = sendRequest(matchRequestUrl);
             listOfMatches.AddRange(SportpesaUtil.Parse(responseWithMatches, matchesInfo));
