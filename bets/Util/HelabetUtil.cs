@@ -141,12 +141,32 @@ namespace bets.Util
                         {
                             b3 = new Bet(period + "2", double.Parse(bet["C"].ToString()));
                         }
+                        else if (bet["T"].ToString() == "4")
+                        {
+                            listOfBets.Add(new Bet(period + "1X", double.Parse(bet["C"].ToString())));
+                        }
+                        else if (bet["T"].ToString() == "5")
+                        {
+                            listOfBets.Add(new Bet(period + "12", double.Parse(bet["C"].ToString())));
+                        }
+                        else if (bet["T"].ToString() == "6")
+                        {
+                            listOfBets.Add(new Bet(period + "X2", double.Parse(bet["C"].ToString())));
+                        }
                     }
                 }
-                if (b1 != null && b2 == null && b3 != null)
+                if (b1 != null && b2 != null && b3 != null)
+                {
+                    listOfBets.Add(b1);
+                    listOfBets.Add(b2);
+                    listOfBets.Add(b3);
+                    match.Way3 = true;
+                }
+                else if(b1 != null && b2 == null && b3 != null)
                 {
                     listOfBets.Add(b1);
                     listOfBets.Add(b3);
+                    match.Way2 = true;
                 }
                 listOfMatches.Add(match);
             }

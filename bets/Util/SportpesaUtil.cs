@@ -28,7 +28,24 @@ namespace bets.Util
                         JToken marketNameToken = market["name"];
                         if (marketNameToken != null)
                         {
-                            if (marketNameToken.ToString() == "3 Way")
+                            string marketName = marketNameToken.ToString();
+                            string period = "_";
+                            if(marketName.Contains(" - Full Time"))
+                            {
+                                marketName = marketName.Replace(" - Full Time", "");
+                            }
+                            else if (marketName.Contains(" - First Half"))
+                            {
+                                period = "1_";
+                                marketName = marketName.Replace(" - First Half", "");
+                            }
+                            else if(marketName.Contains("Second Half"))
+                            {
+                                period = "2_";
+                                marketName = marketName.Replace(" - Second Half", "");
+                            }
+
+                            if (marketName == "3 Way")
                             {
                                 JToken sel = market["selections"];
                                 if (sel != null)
@@ -38,13 +55,14 @@ namespace bets.Util
                                     JToken second = sel[2];
                                     if (first != null && draw != null && second != null)
                                     {
-                                        match.ListOfBets.Add(new Bet("1", double.Parse(first["odds"].ToString())));
-                                        match.ListOfBets.Add(new Bet("X", double.Parse(draw["odds"].ToString())));
-                                        match.ListOfBets.Add(new Bet("2", double.Parse(second["odds"].ToString())));
+                                        match.Way3 = true;
+                                        match.ListOfBets.Add(new Bet(period + "1", double.Parse(first["odds"].ToString())));
+                                        match.ListOfBets.Add(new Bet(period + "X", double.Parse(draw["odds"].ToString())));
+                                        match.ListOfBets.Add(new Bet(period + "2", double.Parse(second["odds"].ToString())));
                                     }
                                 }
                             }
-                            else if (marketNameToken.ToString() == "Over/Under")
+                            else if (marketName == "Over/Under")
                             {
                                 JToken sel = market["selections"];
                                 if (sel != null)
@@ -53,18 +71,18 @@ namespace bets.Util
                                     {
                                         if (total["name"].ToString().Contains("OVER"))
                                         {
-                                            match.ListOfBets.Add(new Bet("Total Over " + total["specValue"].ToString().Trim().Replace(',', '.'),
+                                            match.ListOfBets.Add(new Bet(period + "Total Over " + total["specValue"].ToString().Trim().Replace(',', '.'),
                                                 double.Parse(total["odds"].ToString())));
                                         }
                                         else if (total["name"].ToString().Contains("UNDER"))
                                         {
-                                            match.ListOfBets.Add(new Bet("Total Under " + total["specValue"].ToString().Trim().Replace(',', '.'),
+                                            match.ListOfBets.Add(new Bet(period + "Total Under " + total["specValue"].ToString().Trim().Replace(',', '.'),
                                                 double.Parse(total["odds"].ToString())));
                                         }
                                     }
                                 }
                             }
-                            else if (marketNameToken.ToString() == "Euro Handicap")
+                            else if (marketName == "Euro Handicap")
                             {
                                 JToken sel = market["selections"];
                                 if (sel != null)
@@ -81,7 +99,7 @@ namespace bets.Util
                                                 valStr = "+" + valStr;
                                             }
 
-                                            match.ListOfBets.Add(new Bet("H1 " + valStr.Trim().Replace(',', '.'),
+                                            match.ListOfBets.Add(new Bet(period + "H1 " + valStr.Trim().Replace(',', '.'),
                                                 double.Parse(handicap["odds"].ToString())));
                                         }
                                         else if (handicap["shortName"].ToString() == "2")
@@ -95,10 +113,66 @@ namespace bets.Util
                                                 valStr = "+" + valStr;
                                             }
 
-                                            match.ListOfBets.Add(new Bet("H2 " + valStr.Trim().Replace(',', '.'),
+                                            match.ListOfBets.Add(new Bet(period + "H2 " + valStr.Trim().Replace(',', '.'),
                                                 double.Parse(handicap["odds"].ToString())));
                                         }
 
+                                    }
+                                }
+                            }
+                            else if (marketName == "Double Chance")
+                            {
+                                JToken sel = market["selections"];
+                                if (sel != null)
+                                {
+                                    JToken first_or_draw = sel[0];
+                                    JToken second_or_draw = sel[1];
+                                    JToken not_drow = sel[2];
+                                    if (first_or_draw != null && second_or_draw != null && not_drow != null)
+                                    {
+                                        match.ListOfBets.Add(new Bet(period + "1X", double.Parse(first_or_draw["odds"].ToString())));
+                                        match.ListOfBets.Add(new Bet(period + "X2", double.Parse(second_or_draw["odds"].ToString())));
+                                        match.ListOfBets.Add(new Bet(period + "12", double.Parse(not_drow["odds"].ToString())));
+                                    }
+                                }
+                            }
+                            else if(marketName == "Total Goals Over/Under Home Team")
+                            {
+                                JToken sel = market["selections"];
+                                if (sel != null)
+                                {
+                                    foreach (var total in sel)
+                                    {
+                                        if (total["name"].ToString().Contains("OVER"))
+                                        {
+                                            match.ListOfBets.Add(new Bet(period + "Total1 Over " + total["specValue"].ToString().Trim().Replace(',', '.'),
+                                                double.Parse(total["odds"].ToString())));
+                                        }
+                                        else if (total["name"].ToString().Contains("UNDER"))
+                                        {
+                                            match.ListOfBets.Add(new Bet(period + "Total1 Under " + total["specValue"].ToString().Trim().Replace(',', '.'),
+                                                double.Parse(total["odds"].ToString())));
+                                        }
+                                    }
+                                }
+                            }
+                            else if (marketName == "Total Goals Over/Under Away Team")
+                            {
+                                JToken sel = market["selections"];
+                                if (sel != null)
+                                {
+                                    foreach (var total in sel)
+                                    {
+                                        if (total["name"].ToString().Contains("OVER"))
+                                        {
+                                            match.ListOfBets.Add(new Bet(period + "Total1 Over " + total["specValue"].ToString().Trim().Replace(',', '.'),
+                                                double.Parse(total["odds"].ToString())));
+                                        }
+                                        else if (total["name"].ToString().Contains("UNDER"))
+                                        {
+                                            match.ListOfBets.Add(new Bet(period + "Total1 Under " + total["specValue"].ToString().Trim().Replace(',', '.'),
+                                                double.Parse(total["odds"].ToString())));
+                                        }
                                     }
                                 }
                             }
@@ -136,7 +210,7 @@ namespace bets.Util
                                 Match matchInfo = new Match("1", new List<Bet>());
                                 matchInfo.MatchName = fnameToken.ToString() + " v " + snameToken.ToString();
                                 matchInfo.MatchId = idToken.ToString();
-                                matchInfo.Url = "https://www.sportpesa.com/games/" + matchInfo.MatchId + "/markets?sportId=1&section=highlights";
+                                matchInfo.Url = "https://www.sportpesa.com/games/" + matchInfo.MatchId + "/markets?sportId=1";
 
                                 DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
                                 dtDateTime = dtDateTime.AddMilliseconds(long.Parse(timeToken.ToString())).ToLocalTime();
