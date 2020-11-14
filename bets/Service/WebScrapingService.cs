@@ -27,8 +27,13 @@ namespace bets.Service
                 // TODO remove it after testing
                 if (sportId != "1") continue;
                 String responseWithMatches = sendRequest(String.Format("https://helabet.co.ke/LineFeed/Get1x2_VZip?sports={0}&count=10&lng=en&tf=3000000&tz=2&mode=7&partner=237&getEmpty=true", sportId));
-                List<Match> matches = HelabetUtil.parseMatches(responseWithMatches, "");
-                listOfMatches.AddRange(matches);
+                String responseWithMatchesPeriod1 = sendRequest(String.Format("https://helabet.co.ke/LineFeed/Get1x2_VZip?sports={0}&count=10&lng=en&tf=3000000&tz=2&mode=7&partner=237&getEmpty=true&typeGames=1", sportId));
+                String responseWithMatchesPeriod2 = sendRequest(String.Format("https://helabet.co.ke/LineFeed/Get1x2_VZip?sports={0}&count=10&lng=en&tf=3000000&tz=2&mode=7&partner=237&getEmpty=true&typeGames=2", sportId));
+                String responseWithMatchesPeriod3 = sendRequest(String.Format("https://helabet.co.ke/LineFeed/Get1x2_VZip?sports={0}&count=10&lng=en&tf=3000000&tz=2&mode=7&partner=237&getEmpty=true&typeGames=3", sportId));
+                listOfMatches.AddRange(HelabetUtil.parseMatches(responseWithMatches, ""));
+                listOfMatches.AddRange(HelabetUtil.parseMatches(responseWithMatchesPeriod1, "1"));
+                listOfMatches.AddRange(HelabetUtil.parseMatches(responseWithMatchesPeriod2, "2"));
+                listOfMatches.AddRange(HelabetUtil.parseMatches(responseWithMatchesPeriod3, "3"));
 
                 // TODO do something with thread.sleep
                 Thread.Sleep(2000);
