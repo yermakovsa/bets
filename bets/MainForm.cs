@@ -74,17 +74,36 @@ namespace bets
 
         private void sportNameComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            Cursor.Current = Cursors.WaitCursor;
+            long memoryBefore = GC.GetTotalMemory(true);
+            DateTime dateTimeBeforeProcessing = DateTime.Now;
+
             String sportName = sportNameComboBox.SelectedItem.ToString();
             String sportId = helabetSportIdSportNameMap.FirstOrDefault(x => x.Value == sportName).Key;
             List<Match> matches = webScrapingService.getHelabetMatchesBySportId(sportId);
             oddPanel.Controls.Clear();
+            long numberOfBets = 0;
             foreach (Match match in matches)
             {
                 match.MatchName = match.MatchName.Replace("Gaming", "").Replace("Academy", "").Replace("Esports", "").Replace("eSports", "");
                 MatchPanel matchPanel = new MatchPanel(match, "Helabet");
-                oddPanel.Controls.Add(matchPanel);
-                
+                if(oddPanel.Controls.Count < 50) oddPanel.Controls.Add(matchPanel);
+                numberOfBets += match.ListOfBets.Count();
             }
+            DateTime dateTimeAfterProcessing = DateTime.Now;
+
+            long memoryAfter = GC.GetTotalMemory(false);
+            processTimeLabel.Text = Math.Round((dateTimeAfterProcessing - dateTimeBeforeProcessing).TotalMilliseconds, 2) + " ms";
+            dataSizeLabel.Text = Math.Round((double)(memoryAfter - memoryBefore) / 1024.0 / 1024.0, 4) + " MB";
+            numberOfMatchesLabel.Text = matches.Count + "";
+            numberOfBetsLabel.Text = numberOfBets + "";
+            Cursor.Current = Cursors.Default;
+           
+        }
+
+        private void processTimeLabel_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

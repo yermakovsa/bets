@@ -128,19 +128,19 @@ namespace bets.Util
                         }
                         else if (bet["T"].ToString() == "11")
                         {
-                            listOfBets.Add(new Bet(period + "Total1 Over " + bet["P"].ToString().Trim().Replace(',', '.'), double.Parse(bet["C"].ToString())));
+                            listOfBets.Add(new Bet(period + "Individual Total1 Over " + bet["P"].ToString().Trim().Replace(',', '.'), double.Parse(bet["C"].ToString())));
                         }
                         else if (bet["T"].ToString() == "12")
                         {
-                            listOfBets.Add(new Bet(period + "Total1 Under " + bet["P"].ToString().Trim().Replace(',', '.'), double.Parse(bet["C"].ToString())));
+                            listOfBets.Add(new Bet(period + "Individual Total1 Under " + bet["P"].ToString().Trim().Replace(',', '.'), double.Parse(bet["C"].ToString())));
                         }
                         else if (bet["T"].ToString() == "13")
                         {
-                            listOfBets.Add(new Bet(period + "Total2 Over " + bet["P"].ToString().Trim().Replace(',', '.'), double.Parse(bet["C"].ToString())));
+                            listOfBets.Add(new Bet(period + "Individual Total2 Over " + bet["P"].ToString().Trim().Replace(',', '.'), double.Parse(bet["C"].ToString())));
                         }
                         else if (bet["T"].ToString() == "14")
                         {
-                            listOfBets.Add(new Bet(period + "Total2 Under " + bet["P"].ToString().Trim().Replace(',', '.'), double.Parse(bet["C"].ToString())));
+                            listOfBets.Add(new Bet(period + "Individual Total2 Under " + bet["P"].ToString().Trim().Replace(',', '.'), double.Parse(bet["C"].ToString())));
                         }
                         else if (bet["T"].ToString() == "1" || bet["T"].ToString() == "7736" || bet["T"].ToString() == "401")
                         {

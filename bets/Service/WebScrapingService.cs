@@ -14,6 +14,7 @@ namespace bets.Service
 {
     class WebScrapingService
     {
+        public int numberOfMatches = 20;
         public Bookmaker scrapeHelabet()
         {
             List<Match> listOfMatches = new List<Match>();
@@ -67,17 +68,17 @@ namespace bets.Service
         public List<Match> getHelabetMatchesBySportId(String sportId)
         {
             List<Match> listOfMatches = new List<Match>();
-            String responseWithMatches = sendRequest(String.Format("https://helabet.co.ke/LineFeed/Get1x2_VZip?sports={0}&count=10&lng=en&tf=3000000&tz=2&mode=7&partner=237&getEmpty=true", sportId));
+            String responseWithMatches = sendRequest(String.Format("https://helabet.co.ke/LineFeed/Get1x2_VZip?sports={0}&count={1}&lng=en&tf=3000000&tz=2&mode=7&partner=237&getEmpty=true", sportId, numberOfMatches));
             Thread.Sleep(1000);
-            String responseWithMatchesPeriod1 = sendRequest(String.Format("https://helabet.co.ke/LineFeed/Get1x2_VZip?sports={0}&count=10&lng=en&tf=3000000&tz=2&mode=7&partner=237&getEmpty=true&typeGames=1", sportId));
+            String responseWithMatchesPeriod1 = sendRequest(String.Format("https://helabet.co.ke/LineFeed/Get1x2_VZip?sports={0}&count={1}&lng=en&tf=3000000&tz=2&mode=7&partner=237&getEmpty=true&typeGames=1", sportId, numberOfMatches));
             Thread.Sleep(1000);
-            String responseWithMatchesPeriod2 = sendRequest(String.Format("https://helabet.co.ke/LineFeed/Get1x2_VZip?sports={0}&count=10&lng=en&tf=3000000&tz=2&mode=7&partner=237&getEmpty=true&typeGames=2", sportId));
+            String responseWithMatchesPeriod2 = sendRequest(String.Format("https://helabet.co.ke/LineFeed/Get1x2_VZip?sports={0}&count={1}&lng=en&tf=3000000&tz=2&mode=7&partner=237&getEmpty=true&typeGames=2", sportId, numberOfMatches));
             Thread.Sleep(1000);
-            String responseWithMatchesPeriod3 = sendRequest(String.Format("https://helabet.co.ke/LineFeed/Get1x2_VZip?sports={0}&count=10&lng=en&tf=3000000&tz=2&mode=7&partner=237&getEmpty=true&typeGames=3", sportId));
+            String responseWithMatchesPeriod3 = sendRequest(String.Format("https://helabet.co.ke/LineFeed/Get1x2_VZip?sports={0}&count={1}&lng=en&tf=3000000&tz=2&mode=7&partner=237&getEmpty=true&typeGames=3", sportId, numberOfMatches));
             listOfMatches.AddRange(HelabetUtil.parseMatches(responseWithMatches, ""));
-            listOfMatches.AddRange(HelabetUtil.parseMatches(responseWithMatchesPeriod1, "1_"));
-            listOfMatches.AddRange(HelabetUtil.parseMatches(responseWithMatchesPeriod2, "2_"));
-            listOfMatches.AddRange(HelabetUtil.parseMatches(responseWithMatchesPeriod3, "3_"));
+            listOfMatches.AddRange(HelabetUtil.parseMatches(responseWithMatchesPeriod1, "period1_"));
+            listOfMatches.AddRange(HelabetUtil.parseMatches(responseWithMatchesPeriod2, "period2_"));
+            listOfMatches.AddRange(HelabetUtil.parseMatches(responseWithMatchesPeriod3, "period3_"));
             return MergeMatchesWithSameNameAndDate(listOfMatches);
         }
         public Dictionary<String, String> getHelabetSportIdSportNameMap()

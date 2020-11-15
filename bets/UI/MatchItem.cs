@@ -51,8 +51,8 @@ namespace bets.UI
         {
             System.Windows.Forms.Clipboard.SetText(matchUrl);
             PopupNotifier popupNotifier = new PopupNotifier();
-            popupNotifier.TitleText = "link copied";
-            popupNotifier.Size = new System.Drawing.Size(75, 50);
+            popupNotifier.TitleText = "Link has been copied";
+            popupNotifier.Size = new System.Drawing.Size(150, 75);
             popupNotifier.Popup();
         }
     }

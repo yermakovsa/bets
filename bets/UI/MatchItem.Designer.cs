@@ -69,7 +69,7 @@ namespace bets.UI
             // bookmakerNameLabel
             // 
             this.bookmakerNameLabel.AutoSize = true;
-            this.bookmakerNameLabel.Location = new System.Drawing.Point(311, 70);
+            this.bookmakerNameLabel.Location = new System.Drawing.Point(381, 70);
             this.bookmakerNameLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.bookmakerNameLabel.Name = "bookmakerNameLabel";
             this.bookmakerNameLabel.Size = new System.Drawing.Size(65, 20);
@@ -79,10 +79,10 @@ namespace bets.UI
             // 
             // copyUrlButton
             // 
-            this.copyUrlButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.copyUrlButton.Location = new System.Drawing.Point(301, 40);
+            this.copyUrlButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.copyUrlButton.Location = new System.Drawing.Point(374, 28);
             this.copyUrlButton.Name = "copyUrlButton";
-            this.copyUrlButton.Size = new System.Drawing.Size(75, 23);
+            this.copyUrlButton.Size = new System.Drawing.Size(86, 32);
             this.copyUrlButton.TabIndex = 4;
             this.copyUrlButton.Text = "copy url";
             this.copyUrlButton.UseVisualStyleBackColor = true;
@@ -101,7 +101,7 @@ namespace bets.UI
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "MatchItem";
-            this.Size = new System.Drawing.Size(389, 97);
+            this.Size = new System.Drawing.Size(463, 97);
             this.Load += new System.EventHandler(this.MatchItem_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
