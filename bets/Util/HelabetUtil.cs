@@ -10,6 +10,8 @@ namespace bets.Util
 {
     class HelabetUtil
     {
+        private static List<String> forbiddenIds = new List<String>() 
+            { "2999","249","19","220","41","68","44","132","242","82","38","202","23","24","87","69","92","133","20","176" };
         public static List<Match> parseMatches(string s, string period)
         {
             List<Match> listOfMatches = new List<Match>();
@@ -182,7 +184,7 @@ namespace bets.Util
             {
                 String sportId = idObject["I"].ToString();
                 String sportName = idObject["N"].ToString();
-                if (sportId == "2999") continue;
+                if (forbiddenIds.Contains(sportId)) continue;
                 keyValuePairs.Add(sportId, sportName);
             }
             return keyValuePairs;
