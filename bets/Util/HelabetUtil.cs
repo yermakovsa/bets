@@ -10,7 +10,7 @@ namespace bets.Util
 {
     class HelabetUtil
     {
-        public static List<Match> parseMatches(string s, int period)
+        public static List<Match> parseMatches(string s, string period)
         {
             List<Match> listOfMatches = new List<Match>();
             JObject json = JObject.Parse(s);
@@ -40,7 +40,7 @@ namespace bets.Util
                 if (sportName.ToLower().Contains("table")) sportName = "Table-Tennis";
                 champName = champName.Replace(":", "");
                 // TODO change url
-                string tmpUrl = "ua-1x-bet.com/en/line/" + sportName + "/" + champID + "-" + champName + "/";
+                string tmpUrl = "helabet.co.ke/line/" + sportName + "/" + champID + "-" + champName + "/";
                 tmpUrl += matchID + "-" + matchName + "/";
                 string url = "";
                 foreach (char x in tmpUrl)
@@ -141,12 +141,32 @@ namespace bets.Util
                         {
                             b3 = new Bet(period + "2", double.Parse(bet["C"].ToString()));
                         }
+                        else if (bet["T"].ToString() == "4")
+                        {
+                            listOfBets.Add(new Bet(period + "1X", double.Parse(bet["C"].ToString())));
+                        }
+                        else if (bet["T"].ToString() == "5")
+                        {
+                            listOfBets.Add(new Bet(period + "12", double.Parse(bet["C"].ToString())));
+                        }
+                        else if (bet["T"].ToString() == "6")
+                        {
+                            listOfBets.Add(new Bet(period + "X2", double.Parse(bet["C"].ToString())));
+                        }
                     }
                 }
-                if (b1 != null && b2 == null && b3 != null)
+                if (b1 != null && b2 != null && b3 != null)
+                {
+                    listOfBets.Add(b1);
+                    listOfBets.Add(b2);
+                    listOfBets.Add(b3);
+                    match.Way3 = true;
+                }
+                else if(b1 != null && b2 == null && b3 != null)
                 {
                     listOfBets.Add(b1);
                     listOfBets.Add(b3);
+                    match.Way2 = true;
                 }
                 listOfMatches.Add(match);
             }
