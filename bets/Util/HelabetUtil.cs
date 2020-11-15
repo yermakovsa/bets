@@ -19,9 +19,10 @@ namespace bets.Util
             {
                 List<Bet> listOfBets = new List<Bet>();
                 Match match = new Match("1", listOfBets);
+                JToken t1 = mch["O1"];
                 JToken t2 = mch["O2"];
                 string team1, team2;
-                if (t2 != null)
+                if (t2 != null && t1 != null)
                 {
                     team1 = mch["O1"].ToString();
                     team2 = mch["O2"].ToString();
@@ -29,8 +30,9 @@ namespace bets.Util
                 }
                 else
                 {
-                    team1 = mch["O1"].ToString();
-                    match.MatchName = team1 + " v empty";
+                    continue;
+                    //team1 = mch["O1"].ToString();
+                    //match.MatchName = team1 + " v empty";
                 }
                 string matchID = mch["CI"].ToString();
                 string matchName = match.MatchName.Replace(" v ", " ").Replace(" ", "-").Replace(".", "");
