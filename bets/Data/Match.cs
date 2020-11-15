@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace bets.Data
 {
-    class Match
+    public class Match
     {
         private string matchName;
+
+        private string leagueName;
         private string matchId;
         private string url;
         private DateTime dateTime;
@@ -27,6 +29,7 @@ namespace bets.Data
         public string MatchId { get => matchId; set => matchId = value; }
         public string Url { get => url; set => url = value; }
         public DateTime DateTime { get => dateTime; set => dateTime = value; }
+        public string LeagueName { get => leagueName; set => leagueName = value; }
         internal List<Bet> ListOfBets { get => listOfBets; set => listOfBets = value; }
         public bool Way3 { get => way3; set => way3 = value; }
         public bool Way2 { get => way2; set => way2 = value; }

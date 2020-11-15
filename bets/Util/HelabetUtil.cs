@@ -172,17 +172,19 @@ namespace bets.Util
             }
             return listOfMatches;
         }
-        public static List<String> parseSportIds(String inputString)
+        public static Dictionary<String, String> parseSportIds(String inputString)
         {
-            List<String> listOfSportId = new List<String>();
+            Dictionary<String, String> keyValuePairs = new Dictionary<String, String>();
             JObject jObject = JObject.Parse(inputString);
             JArray idArray = (JArray)jObject["Value"];
-            foreach(JToken idObject in idArray)
+            foreach (JToken idObject in idArray)
             {
                 String sportId = idObject["I"].ToString();
-                listOfSportId.Add(sportId);
+                String sportName = idObject["N"].ToString();
+                if (sportId == "2999") continue;
+                keyValuePairs.Add(sportId, sportName);
             }
-            return listOfSportId;
+            return keyValuePairs;
         }
     }
  
