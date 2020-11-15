@@ -19,11 +19,19 @@ namespace bets.Util
             var value = json["Value"];
             foreach (var mch in value)
             {
+                JToken tg = mch["TG"];
+                if(tg != null)
+                {
+                    //yellow cards and others
+                    continue;
+                }
+
                 List<Bet> listOfBets = new List<Bet>();
                 Match match = new Match("1", listOfBets);
+                JToken t1 = mch["O1"];
                 JToken t2 = mch["O2"];
                 string team1, team2;
-                if (t2 != null)
+                if (t2 != null && t1 != null)
                 {
                     team1 = mch["O1"].ToString();
                     team2 = mch["O2"].ToString();
@@ -31,8 +39,9 @@ namespace bets.Util
                 }
                 else
                 {
-                    team1 = mch["O1"].ToString();
-                    match.MatchName = team1 + " v empty";
+                    continue;
+                    //team1 = mch["O1"].ToString();
+                    //match.MatchName = team1 + " v empty";
                 }
                 string matchID = mch["CI"].ToString();
                 string matchName = match.MatchName.Replace(" v ", " ").Replace(" ", "-").Replace(".", "");
@@ -52,6 +61,7 @@ namespace bets.Util
                 }
                 match.Url = url;
                 match.LeagueName = champName;
+                match.MatchId = mch["I"].ToString();
                 int sec;
                 sec = int.Parse(mch["S"].ToString());
                 DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
@@ -132,7 +142,7 @@ namespace bets.Util
                         {
                             listOfBets.Add(new Bet(period + "Total2 Under " + bet["P"].ToString().Trim().Replace(',', '.'), double.Parse(bet["C"].ToString())));
                         }
-                        else if (bet["T"].ToString() == "1")
+                        else if (bet["T"].ToString() == "1" || bet["T"].ToString() == "7736" || bet["T"].ToString() == "401")
                         {
                             b1 = new Bet(period + "1", double.Parse(bet["C"].ToString()));
                         }
@@ -140,7 +150,7 @@ namespace bets.Util
                         {
                             b2 = new Bet(period + "X", double.Parse(bet["C"].ToString()));
                         }
-                        else if (bet["T"].ToString() == "3")
+                        else if (bet["T"].ToString() == "3" || bet["T"].ToString() == "7737" || bet["T"].ToString() == "402")
                         {
                             b3 = new Bet(period + "2", double.Parse(bet["C"].ToString()));
                         }
