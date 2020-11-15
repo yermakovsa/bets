@@ -25,7 +25,7 @@ namespace bets
         private void button1_Click(object sender, EventArgs e)
         {
             List<Bookmaker> bookmakers = new List<Bookmaker>();
-            bookmakers.Add(webScrapingService.scrapHelabet());
+            bookmakers.Add(webScrapingService.scrapeHelabet());
             oddPanel.Controls.Clear();
             foreach (Bookmaker bookmaker in bookmakers)
             {

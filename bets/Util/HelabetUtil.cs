@@ -49,6 +49,7 @@ namespace bets.Util
                         x == '-' || x == '/' || x == '.' || x == ':' || x == '-') url += x;
                 }
                 match.Url = url;
+                match.LeagueName = champName;
                 int sec;
                 sec = int.Parse(mch["S"].ToString());
                 DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);

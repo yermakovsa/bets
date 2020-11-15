@@ -68,7 +68,7 @@ namespace bets.UI
             // bookmakerNameLabel
             // 
             this.bookmakerNameLabel.AutoSize = true;
-            this.bookmakerNameLabel.Location = new System.Drawing.Point(311, 11);
+            this.bookmakerNameLabel.Location = new System.Drawing.Point(301, 70);
             this.bookmakerNameLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.bookmakerNameLabel.Name = "bookmakerNameLabel";
             this.bookmakerNameLabel.Size = new System.Drawing.Size(65, 20);
@@ -79,6 +79,7 @@ namespace bets.UI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
             this.BackColor = System.Drawing.Color.GhostWhite;
             this.Controls.Add(this.bookmakerNameLabel);
             this.Controls.Add(this.startDateLabel);
