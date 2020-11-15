@@ -29,11 +29,13 @@ namespace bets.UI
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MatchItem));
             this.matchNameLabel = new System.Windows.Forms.Label();
             this.leagueNameLabel = new System.Windows.Forms.Label();
             this.startDateLabel = new System.Windows.Forms.Label();
             this.bookmakerNameLabel = new System.Windows.Forms.Label();
-            this.copyUrlButton = new System.Windows.Forms.Button();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // matchNameLabel
@@ -77,23 +79,22 @@ namespace bets.UI
             this.bookmakerNameLabel.Text = "Helabet";
             this.bookmakerNameLabel.Click += new System.EventHandler(this.bookmakerNameLabel_Click);
             // 
-            // copyUrlButton
+            // pictureBox1
             // 
-            this.copyUrlButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.copyUrlButton.Location = new System.Drawing.Point(374, 28);
-            this.copyUrlButton.Name = "copyUrlButton";
-            this.copyUrlButton.Size = new System.Drawing.Size(86, 32);
-            this.copyUrlButton.TabIndex = 4;
-            this.copyUrlButton.Text = "copy url";
-            this.copyUrlButton.UseVisualStyleBackColor = true;
-            this.copyUrlButton.Click += new System.EventHandler(this.button1_Click);
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(395, 26);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(40, 41);
+            this.pictureBox1.TabIndex = 5;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // MatchItem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.GhostWhite;
-            this.Controls.Add(this.copyUrlButton);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(255)))));
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.bookmakerNameLabel);
             this.Controls.Add(this.startDateLabel);
             this.Controls.Add(this.leagueNameLabel);
@@ -103,6 +104,8 @@ namespace bets.UI
             this.Name = "MatchItem";
             this.Size = new System.Drawing.Size(463, 97);
             this.Load += new System.EventHandler(this.MatchItem_Load);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.MatchItem_Paint);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -114,6 +117,6 @@ namespace bets.UI
         private System.Windows.Forms.Label leagueNameLabel;
         private System.Windows.Forms.Label startDateLabel;
         private System.Windows.Forms.Label bookmakerNameLabel;
-        private System.Windows.Forms.Button copyUrlButton;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

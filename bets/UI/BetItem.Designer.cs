@@ -47,7 +47,7 @@ namespace bets.UI
             // betCoefLabel
             // 
             this.betCoefLabel.AutoSize = true;
-            this.betCoefLabel.Location = new System.Drawing.Point(360, 11);
+            this.betCoefLabel.Location = new System.Drawing.Point(361, 11);
             this.betCoefLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.betCoefLabel.Name = "betCoefLabel";
             this.betCoefLabel.Size = new System.Drawing.Size(68, 20);
@@ -64,7 +64,7 @@ namespace bets.UI
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "BetItem";
-            this.Size = new System.Drawing.Size(449, 46);
+            this.Size = new System.Drawing.Size(464, 46);
             this.Load += new System.EventHandler(this.BetItem_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

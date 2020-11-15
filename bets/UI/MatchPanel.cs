@@ -74,5 +74,9 @@ namespace bets.UI
             matchItem.setLeagueName(match.LeagueName);
             matchItem.MatchUrl = match.Url;
         }
+
+        private void matchItem_Paint(object sender, PaintEventArgs e)
+        {
+        }
     }
 }

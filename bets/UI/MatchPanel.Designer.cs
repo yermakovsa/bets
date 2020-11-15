@@ -48,7 +48,7 @@ namespace bets.UI
             // 
             // matchItem
             // 
-            this.matchItem.BackColor = System.Drawing.Color.GhostWhite;
+            this.matchItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(255)))));
             this.matchItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.matchItem.Location = new System.Drawing.Point(0, 0);
             this.matchItem.Margin = new System.Windows.Forms.Padding(0);
@@ -57,6 +57,7 @@ namespace bets.UI
             this.matchItem.Size = new System.Drawing.Size(473, 101);
             this.matchItem.TabIndex = 0;
             this.matchItem.Load += new System.EventHandler(this.matchItem_Load);
+            this.matchItem.Paint += new System.Windows.Forms.PaintEventHandler(this.matchItem_Paint);
             this.matchItem.DoubleClick += new System.EventHandler(this.matchItem_DoubleClick);
             // 
             // MatchPanel
