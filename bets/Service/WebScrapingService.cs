@@ -34,6 +34,36 @@ namespace bets.Service
             }
             return bookmaker;
         }
+
+        public List<Match> MergeMatchesWithSameNameAndDate(List<Match> raw)
+        {
+            List<Match> result = new List<Match>();
+            while(raw.Count > 0)
+            {
+                Match matchToInsert = raw[0];
+                raw.RemoveAt(0);
+                List<int> indexesToRemove = new List<int>();
+                int index = 0;
+                foreach(Match match in raw)
+                {
+                    if(match.MatchName.Equals(matchToInsert.MatchName) && match.DateTime.Equals(matchToInsert.DateTime))
+                    {
+                        matchToInsert.ListOfBets.AddRange(match.ListOfBets);
+                        indexesToRemove.Add(index);
+                    }
+                    ++index;
+                }
+                result.Add(matchToInsert);
+
+                indexesToRemove.Reverse();
+                foreach(int i in indexesToRemove)
+                {
+                    raw.RemoveAt(i);
+                }
+            }
+            return result;
+        }
+
         public List<Match> getHelabetMatchesBySportId(String sportId)
         {
             List<Match> listOfMatches = new List<Match>();
@@ -48,7 +78,7 @@ namespace bets.Service
             listOfMatches.AddRange(HelabetUtil.parseMatches(responseWithMatchesPeriod1, "1_"));
             listOfMatches.AddRange(HelabetUtil.parseMatches(responseWithMatchesPeriod2, "2_"));
             listOfMatches.AddRange(HelabetUtil.parseMatches(responseWithMatchesPeriod3, "3_"));
-            return listOfMatches;
+            return MergeMatchesWithSameNameAndDate(listOfMatches);
         }
         public Dictionary<String, String> getHelabetSportIdSportNameMap()
         {

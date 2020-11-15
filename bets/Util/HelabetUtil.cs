@@ -17,6 +17,13 @@ namespace bets.Util
             var value = json["Value"];
             foreach (var mch in value)
             {
+                JToken tg = mch["TG"];
+                if(tg != null)
+                {
+                    //yellow cards and others
+                    continue;
+                }
+
                 List<Bet> listOfBets = new List<Bet>();
                 Match match = new Match("1", listOfBets);
                 JToken t1 = mch["O1"];
@@ -52,6 +59,7 @@ namespace bets.Util
                 }
                 match.Url = url;
                 match.LeagueName = champName;
+                match.MatchId = mch["I"].ToString();
                 int sec;
                 sec = int.Parse(mch["S"].ToString());
                 DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
