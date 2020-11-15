@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace bets.Data
 {
-    class Bet
+    public class Bet
     {
         private string name;
         private double coef;

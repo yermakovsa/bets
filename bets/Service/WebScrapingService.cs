@@ -21,15 +21,12 @@ namespace bets.Service
             // TODO add constant
             Bookmaker bookmaker = new Bookmaker("helabet", listOfMatches);
 
-            String responseWithIds = sendRequest("https://helabet.co.ke/LineFeed/GetSportsShortZip?lng=en");
-            List<String> listOfSportId = HelabetUtil.parseSportIds(responseWithIds);
+            List<String> listOfSportId = getHelabetSportIdSportNameMap().Keys.ToList();
             foreach(String sportId in listOfSportId)
             {
                 // TODO remove it after testing
                 if (sportId != "1") continue;
-                String responseWithMatches = sendRequest(String.Format("https://helabet.co.ke/LineFeed/Get1x2_VZip?sports={0}&count=50&lng=en&tf=3000000&tz=2&mode=4&partner=237&getEmpty=true", sportId));
-                List<Match> matches = HelabetUtil.parseMatches(responseWithMatches, 0);
-                listOfMatches.AddRange(matches);
+                listOfMatches.AddRange(getHelabetMatchesBySportId(sportId));
 
                 // TODO do something with thread.sleep
                 Thread.Sleep(2000);
@@ -37,6 +34,19 @@ namespace bets.Service
                 break;
             }
             return bookmaker;
+        }
+        public List<Match> getHelabetMatchesBySportId(String sportId)
+        {
+            String responseWithMatches = sendRequest(String.Format("https://helabet.co.ke/LineFeed/Get1x2_VZip?sports={0}&count=50&lng=en&tf=3000000&tz=2&mode=4&partner=237&getEmpty=true", sportId));
+            List<Match> matches = HelabetUtil.parseMatches(responseWithMatches, 0);
+            return matches;
+        }
+        public Dictionary<String, String> getHelabetSportIdSportNameMap()
+        {
+            String responseWithIds = sendRequest("https://helabet.co.ke/LineFeed/GetSportsShortZip?lng=en");
+            Thread.Sleep(2000);
+            Dictionary<String, String> sportIdSportNameMap = HelabetUtil.parseSportIds(responseWithIds);
+            return sportIdSportNameMap;
         }
 
         public Bookmaker scrapeSportpesa()
