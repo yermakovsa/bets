@@ -33,6 +33,7 @@ namespace bets.UI
             this.leagueNameLabel = new System.Windows.Forms.Label();
             this.startDateLabel = new System.Windows.Forms.Label();
             this.bookmakerNameLabel = new System.Windows.Forms.Label();
+            this.copyUrlButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // matchNameLabel
@@ -68,19 +69,31 @@ namespace bets.UI
             // bookmakerNameLabel
             // 
             this.bookmakerNameLabel.AutoSize = true;
-            this.bookmakerNameLabel.Location = new System.Drawing.Point(301, 70);
+            this.bookmakerNameLabel.Location = new System.Drawing.Point(311, 70);
             this.bookmakerNameLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.bookmakerNameLabel.Name = "bookmakerNameLabel";
             this.bookmakerNameLabel.Size = new System.Drawing.Size(65, 20);
             this.bookmakerNameLabel.TabIndex = 3;
             this.bookmakerNameLabel.Text = "Helabet";
+            this.bookmakerNameLabel.Click += new System.EventHandler(this.bookmakerNameLabel_Click);
+            // 
+            // copyUrlButton
+            // 
+            this.copyUrlButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.copyUrlButton.Location = new System.Drawing.Point(301, 40);
+            this.copyUrlButton.Name = "copyUrlButton";
+            this.copyUrlButton.Size = new System.Drawing.Size(75, 23);
+            this.copyUrlButton.TabIndex = 4;
+            this.copyUrlButton.Text = "copy url";
+            this.copyUrlButton.UseVisualStyleBackColor = true;
+            this.copyUrlButton.Click += new System.EventHandler(this.button1_Click);
             // 
             // MatchItem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoSize = true;
             this.BackColor = System.Drawing.Color.GhostWhite;
+            this.Controls.Add(this.copyUrlButton);
             this.Controls.Add(this.bookmakerNameLabel);
             this.Controls.Add(this.startDateLabel);
             this.Controls.Add(this.leagueNameLabel);
@@ -101,5 +114,6 @@ namespace bets.UI
         private System.Windows.Forms.Label leagueNameLabel;
         private System.Windows.Forms.Label startDateLabel;
         private System.Windows.Forms.Label bookmakerNameLabel;
+        private System.Windows.Forms.Button copyUrlButton;
     }
 }

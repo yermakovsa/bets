@@ -72,6 +72,7 @@ namespace bets.UI
             matchItem.setMatchName(match.MatchName);
             matchItem.setStartDate(match.DateTime.ToShortDateString() + " " + match.DateTime.ToShortTimeString());
             matchItem.setLeagueName(match.LeagueName);
+            matchItem.MatchUrl = match.Url;
         }
     }
 }
