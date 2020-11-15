@@ -23,7 +23,8 @@ namespace bets
         {
             WebScrapingService webScrapingService = new WebScrapingService();
             List<Bookmaker> bookmakers = new List<Bookmaker>();
-            bookmakers.Add(webScrapingService.scrapeSportpesa());
+            //bookmakers.Add(webScrapingService.scrapeSportpesa());
+            bookmakers.Add(webScrapingService.scrapeHelabet());
             foreach (Bookmaker bookmaker in bookmakers)
             {
                 listBox1.Items.Add(bookmaker.Name);
