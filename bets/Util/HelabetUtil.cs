@@ -130,7 +130,7 @@ namespace bets.Util
                         {
                             listOfBets.Add(new Bet(period + "Total2 Under " + bet["P"].ToString().Trim().Replace(',', '.'), double.Parse(bet["C"].ToString())));
                         }
-                        else if (bet["T"].ToString() == "1")
+                        else if (bet["T"].ToString() == "1" || bet["T"].ToString() == "7736" || bet["T"].ToString() == "401")
                         {
                             b1 = new Bet(period + "1", double.Parse(bet["C"].ToString()));
                         }
@@ -138,7 +138,7 @@ namespace bets.Util
                         {
                             b2 = new Bet(period + "X", double.Parse(bet["C"].ToString()));
                         }
-                        else if (bet["T"].ToString() == "3")
+                        else if (bet["T"].ToString() == "3" || bet["T"].ToString() == "7737" || bet["T"].ToString() == "402")
                         {
                             b3 = new Bet(period + "2", double.Parse(bet["C"].ToString()));
                         }
